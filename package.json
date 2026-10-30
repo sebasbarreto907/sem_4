@@ -1,0 +1,37 @@
+{
+  "name": "ejercicio_sem_4_aplicaciones_servidor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gestion de pedidos con Nest.js, Prisma y SQLite",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file=.env dist/main.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "node --env-file=.env prisma/seed.cjs",
+    "db:studio": "prisma studio",
+    "setup": "npm run db:generate && npm run db:deploy && npm run db:seed && npm run build",
+    "test": "npm run build && node --test --test-concurrency=1 test/pedidos.test.cjs"
+  },
+  "dependencies": {
+    "@nestjs/common": "11.2.8",
+    "@nestjs/core": "11.2.8",
+    "@nestjs/platform-express": "11.2.8",
+    "@prisma/client": "6.19.3",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "prisma": "6.19.3",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "multer": "2.5.0",
+    "deepmerge-ts": "8.0.0"
+  }
+}

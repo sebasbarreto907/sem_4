@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-shm
+prisma/*.db-wal
+test/.tmp/
+*.log

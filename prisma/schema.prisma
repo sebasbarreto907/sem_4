@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum EstadoPedido {
+  Pendiente
+  Enviado
+  Recibido
+}
+
+model Producto {
+  id          Int    @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  stock       Int
+
+  @@map("productos")
+}
+
+model Pedido {
+  id                     Int          @id @default(autoincrement())
+  nombreCliente          String
+  clienteClave           String
+  estado                 EstadoPedido @default(Pendiente)
+  // Lista de { productoId, nombreProducto, cantidad }; sin tabla intermedia.
+  productos              Json
+  codigoVerificacionHash String
+  creadoEn               DateTime     @default(now())
+  actualizadoEn          DateTime     @updatedAt
+
+  @@index([clienteClave, estado])
+  @@map("pedidos")
+}

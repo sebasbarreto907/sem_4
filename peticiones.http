@@ -1,0 +1,39 @@
+@baseUrl = http://localhost:3001
+@pedidoId = 1
+@codigo = 123456
+
+### Listar productos de ejemplo
+GET {{baseUrl}}/productos
+
+### Crear producto
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{ "nombre": "Regla", "descripcion": "Regla de 30 cm", "stock": 20 }
+
+### Crear pedido: copia id y codigoVerificacion de la respuesta a las variables
+POST {{baseUrl}}/pedidos
+Content-Type: application/json
+
+{
+  "nombreCliente": "Ana",
+  "productos": [
+    { "productoId": 1, "cantidad": 2 },
+    { "productoId": 2, "cantidad": 3 }
+  ]
+}
+
+### Listar pedidos del cliente
+GET {{baseUrl}}/pedidos?cliente=Ana
+
+### Consultar pedido
+GET {{baseUrl}}/pedidos/{{pedidoId}}
+
+### Enviar: requiere Pendiente
+PATCH {{baseUrl}}/pedidos/{{pedidoId}}/enviar
+
+### Recibir: usa el codigo generado y no debe existir otro Pendiente del cliente
+PATCH {{baseUrl}}/pedidos/{{pedidoId}}/recibir
+Content-Type: application/json
+
+{ "codigoVerificacion": "{{codigo}}" }
